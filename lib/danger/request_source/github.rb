@@ -155,10 +155,10 @@ module Danger
       content = violations.map { |v| process_markdown(v) }
       kind = table_kind_from_title(name)
       previous_violations = all_previous_violations[kind] || []
-      messages = content.map(&:message)
+      messages = content.map(&:message).uniq
       resolved_violations = previous_violations.reject { |s| messages.include? s }
       count = content.count
-      { name: name, emoji: emoji, content: content, resolved: resolved_violations, count: count }
+      { name: name, emoji: emoji, content: content, resolved: resolved_violations.uniq, count: count }
     end
 
     def parse_comment(comment)
